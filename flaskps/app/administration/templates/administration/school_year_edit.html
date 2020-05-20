@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Editar estudiante{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Editar Ciclo lectivo</h4>
+<div class="divider black"></div><br>
+<div class="container">
+  {%if msg %}
+    {{ msg }}
+  {% endif %}
+  <form class="col s12" action="{{ url_for('administration.school_year_edit', school_year_id=school_year.id) }}" method="POST">
+    <div class="row">
+      <div class="col s6">
+        <label for="birth_date">Fecha de incio:</label>
+        <input id="start_date" type="text" class="datepicker" name="start_date" value="{{ school_year.start_date}}">
+      </div>
+      <div class="col s6">
+        <label for="birth_date">Fecha de finalizacion:</label>
+        <input id="end_date" type="text" class="datepicker" name="end_date" value="{{ school_year.end_date }}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <select name="semester">
+          {% if school_year.semesters == 'Primer Semestre' %}
+            <option value="1" selected>{{school_year.semesters}}</option>
+          {% else %}
+            <option value="2" selected>{{school_year.semesters}}</option>
+          {% endif %}
+          <option value="1">Semestre I</option>
+          <option value="2">Semestre II</option>
+        </select>
+        <label for="semester">Semestre:</label>
+      </div>
+    </div>
+    <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button><br><br>
+  </form>
+</div>
+
+
+
+
+
+{% endblock %}

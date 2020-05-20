@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Detalle Ciclo lectivo{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Detalles Ciclo Lectivo</h4>
+<div class="divider black"></div><br>
+<div class="container">
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <p><b>Fecha de inicio:</b> {{ school_year.start_date }} </p>
+      <p><b>Fecha de fin:</b> {{ school_year.end_date }} </p>
+      <p> {{ school_year.semesters }} </p>
+      <a href="{{ url_for('administration.workshop_create',  school_year_id=school_year.id) }}" class="">Agregar Taller</a>
+    </li>
+  </ul>
+  <h5 class="center">Talleres</h5>
+  <div class="divider black"></div><br>
+  <table class="responsive-table centered highlight">
+    <thead>
+      <tr>
+        <th>Taller</th>
+        <th>Nucleo</th>
+        <th>Direccion</th>
+        <th>Horario</th>
+        <th>Dia</th>
+        <th>Docente</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for workshop in school_year.workshops %}
+        <tr>
+          <td>{{ workshop.name }}</td>
+          <td>{{ workshop.nucleo }}</td>
+          <td>{{ workshop.address }}</td>
+          <td>{{ workshop.horario }}</td>
+          <td>{{ workshop.days}}</td>
+          {% for t in teachers %}
+            {% if workshop.teacher_id == t.id %}
+              <td>{{ t.name }} {{ t.surname }}</td>
+            {% endif %}
+          {% endfor %}
+          <td>
+            <a href="{{ url_for('administration.show_workshop_students',  workshop_id=workshop.id) }}"><i class="tiny material-icons green-text text-lighten-1 tooltipped" data-position="right" data-tooltip="Pasar asistencias">check_box</i></a>
+            <a href="{{ url_for('administration.add_student',  workshop_id=workshop.id) }}"><i class="tiny material-icons blue-text text-darken-2 tooltipped" data-position="right" data-tooltip="Agregar alumnos al taller">person_add</i></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

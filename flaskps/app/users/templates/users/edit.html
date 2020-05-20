@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Editar usuario{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Editar: {{ user.username }}</h4>
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row">
+    {% if form.errors %}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form class="col s12" method="POST" action="{{ url_for('users.update', user_id=user.id) }}">
+      <div class="row">
+        <div class="input-field col s6">
+          <input class="validate" type="text" value="{{user.name}}" name="name">
+          <label for="first_name"> Nombre </label>
+        </div>
+        <div class="input-field col s6">
+          <input class="validate" type="text" value="{{user.surname}}" name="surname">
+          <label for="last_name">Apellido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input class="validate" type="email" value="{{user.email}}" name="email">
+          <label for="email">Email</label>
+          <span class="helper-text" data-error="Formato incorrecto" data-success="Ok!"></span>
+        </div>
+        <div class="input-field col s6">
+          <input class="validate" type="text" value="{{user.username}}" name="username">
+          <label for="username"> Nombre de usuario </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input class="validate" type="password" value="" name="password">
+          <label for="password"> Password </label>
+        </div>
+        <div class="input-field col s6">
+          {% if user.active %}
+          <label>
+            <input type="checkbox" value="{{user.active}}" name="active" checked />
+            <span>Activo</span>
+          </label>
+          {% else %}
+          <label>
+            <input type="checkbox" value="{{user.active}}" name="active" checked />
+            <span>Activo</span>
+          </label>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select multiple name="roles">
+            {% for k,v in roles.items() %}
+              {% if v %}
+                <option value="{{ k }}" selected>{{ k }}</option>
+              {% else %}
+                <option value="{{ k }}">{{ k }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <label for="roles">Rol:</label>
+        </div>
+      </div><br>
+      <a href="{{ url_for( 'users.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}

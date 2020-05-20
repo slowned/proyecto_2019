@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="/static/css/style.css" />
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css"  media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{conf.title}}</title>
+</head>
+
+<body>
+  <header class="teal darken-1">
+    <div class="center-align">
+      <img src="static/img/OEB_logo.png" alt="">
+    </div>
+  </header>
+  <main class="teal darken-3 center">
+    <nav>
+      <div class="teal darken-3 nav-wrapper">
+        <a href="#" class="brand-logo left">OEB</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="#">Programacion</a></li>
+          <li><a href="#">Novedades</a></li>
+          <li><a href="#">Nuestras Orquestas</a></li>
+          <li><a href="#">Elegi tu instrumento</a></li>
+          <li><a href="#">Biblioteca</a></li>
+          <li><a href="auth/login">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+    <br>
+    <div class="center-align">
+      <img class="responsive-img" src="static/img/offline.jpg" alt="offline">
+    </div>
+  </main>
+  <footer class="teal darken-3 page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Orquesta Escuela de Berisso</h5>
+          <p class="grey-text text-lighten-4">{{ conf.description }}</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Sitio</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Programacion</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Novedades</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Nuestras Orquestas</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Elegi tu instrumento</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Biblioteca</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2019 DYM Copyright
+        <a class="grey-text text-lighten-4 right" href="#!">{{ conf.email }}</a>
+      </div>
+    </div>
+  </footer>
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+  <script>M.AutoInit();</script>
+</body>
+</html>

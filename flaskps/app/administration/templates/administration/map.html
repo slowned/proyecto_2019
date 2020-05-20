@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Nucleos{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Ubicacion de los nucleos</h4>
+<div class="divider black"></div><br><br>
+<div id=#app>
+  <div id="map" style="height: 400px;"></div><br><br>
+</div>
+
+<script type="text/javascript">
+  var map = L.map('map').setView([-34.9313798, -57.9786087], 12);
+    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  });
+  map.addLayer(layer);
+  L.marker([{{ nucleos[0].longitud }}, {{ nucleos[0].latitude }}]).addTo(map)
+  .bindPopup("{{nucleos[0].name}}");
+  L.marker([{{ nucleos[1].longitud }}, {{ nucleos[1].latitude }}]).addTo(map)
+  .bindPopup("{{nucleos[1].name}}");
+  L.marker([{{ nucleos[2].longitud }}, {{ nucleos[2].latitude }}]).addTo(map)
+  .bindPopup("{{nucleos[2].name}}");
+  L.marker([{{ nucleos[3].longitud }}, {{ nucleos[3].latitude }}]).addTo(map)
+  .bindPopup("{{nucleos[3].name}}");
+
+</script>
+{% endblock %}

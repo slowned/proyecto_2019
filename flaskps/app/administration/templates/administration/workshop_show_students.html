@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Detalle Ciclo lectivo{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="divider black"></div><br>
+<div id="app" class="container">
+  <h3 class="center">Asistencias - Taller de {{workshop.name}}</h3>
+  <div class="divider black"></div><br>
+  <table class="responsive-table centered highlight">
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        {% for lesson in workshop.lessons %}
+          <th>Clase {{ lesson.number }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in workshop.students %}
+        <tr>
+          <td> {{ student.name, student.surname}} </td>
+          {% for attend in student.attend %}
+            {% if attend.lesson.workshop.id == workshop.id %}
+              <td>
+                <label>
+                  <input type="checkbox"
+                         value="{{attend.id}}"
+                         name="active"
+                         @change="sendAttend({{student.id}}, {{attend.lesson_id}})"
+                         {%if attend.has_attended %} checked {% endif %}/>
+                  <span></span>
+                </label>
+              </td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    data: {
+      url: '/workshop/lesson_attend/',
+      response: '',
+    },
+    methods: {
+      sendAttend: function (student_id, lesson_id) {
+        axios
+          .post(this.url, {
+            student_id: student_id,
+            lesson_id: lesson_id
+          })
+          .then(response => {
+            this.response = response.data
+          });
+      },
+    },
+  })
+</script>
+{% endblock %}

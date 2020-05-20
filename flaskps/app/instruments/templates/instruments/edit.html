@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Editar instrumento{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Editar Instrumento</h4><br>
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row">
+    {% if form.errors %}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form class="col s12 teal lighten-4" action="{{ url_for( 'instruments.update', instrument_id=instrument.id ) }}" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="name" type="text" class="validate" name="name" value="{{ instrument.name }}">
+          <label for="name">Nombre:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="type">
+              <option value="{{ instrument.type }}" selected>{{ instrument.type }}</option>
+              <option value="cuerda">Cuerda</option>
+              <option value="percusion">Percusión</option>
+              <option value="viento">Viento</option>
+          </select>
+          <label for="type"></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <p name="inventory_number">Numero de inventario: {{ instrument.inventory_number }} </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="file-field input-field col s6">
+          <div class="btn blue lighten-1">
+            <span>Imagen</span>
+            <input type="file" name="image" id="image">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+      </div>
+      <a href="{{ url_for( 'instruments.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}

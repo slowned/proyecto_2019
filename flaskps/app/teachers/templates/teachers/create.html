@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Nuevo docente{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Nuevo Docente</h4><br>
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row">
+    {% if msg %}
+      {{ msg }}
+    {% endif %}
+    {% if form.errors %}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form class="col s12" action="{{ url_for( 'teachers.create' ) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" name="name">
+          <label for="first_name">Nombre:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate" name="surname">
+          <label for="last_name">Apellido:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="document_type">
+            {% for dni in dniTypes %}
+              <option value="{{ dni.nombre }}">{{ dni.nombre }}</option>
+            {% endfor %}
+          </select>
+          <label for="document_type">Tipo de documento:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="document_number" type="number" class="validate" name="document_number">
+          <label for="document_number">Nro de documento:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <label for="birth_date">Fecha de nacimiento:</label>
+          <input id="birth_date" type="text" class="datepicker" name="birth_date">
+        </div>
+      </div>
+      <div class="divider black"></div><br>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="locality">
+            {% for locality in localities %}
+              <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
+            {% endfor %}
+          </select>
+          <label for="locality">Localidad</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="address" type="text" class="validate" name="address">
+          <label for="address">Domicilio:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="phone" type="tel" class="validate" name="phone">
+          <label for="phone">Telefono:</label>
+        </div>
+      </div>
+      <a href="{{ url_for( 'teachers.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}

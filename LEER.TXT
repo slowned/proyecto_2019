@@ -1,0 +1,5 @@
+#### fuentes sqlalchemy 
+
+https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html  # doc
+https://buildmedia.readthedocs.org/media/pdf/flask-sqlalchemy/stable/flask-sqlalchemy.pdf  # readthedoc
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/  # flask sqlalchemy

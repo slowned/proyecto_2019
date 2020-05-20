@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+tags
+tags/
+env/
+*tags*
+*.pyc
+env2/
+runserver.sh
+runshell.sh
+env*

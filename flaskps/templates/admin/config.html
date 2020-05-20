@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Configuraciones del sitio{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form class="form-group" method="POST" action="{{ url_for('configurations.configuration') }}">
+
+    <label for="paginator"> Numero de paginas </label>
+    <input class="form-control" type="text" value="{{configuration.offset_paginator}}" name="offset">
+    <label for="description"> Descripcion </label>
+    <input class="form-control" type="text" value="{{configuration.description}}" name="description">
+    <label for="title"> Titulo </label>
+    <input class="form-control" type="text" value="{{configuration.title}}" name="title">
+    <label for="email"> eMail: </label>
+    <input class="form-control" type="email" value="{{configuration.email}}" name="email">
+
+
+    {% if configuration.active %}
+    <label>
+        <input type="checkbox" value="{{configuration.active}}" name="active" checked />
+        <span>Sitio activo </span>
+      </label>
+      {% else %}
+      <label>
+          <input type="checkbox" value="{{configuration.active}}" name="active" />
+          <span>Sitio activo </span>
+        </label>
+        {% endif %}
+        <br><br>
+    <input class="btn btn-success right" type="submit" value="Guardar">
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Usuario{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row">
+    {% if msg %}
+      <p>{{msg}}</p>
+    {% endif %}
+    {% if form.errors %}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form class="col s12" action="{{ url_for('users.create') }}" method="POST" >
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" name="name">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate" name="surname">
+          <label for="last_name">Apellido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="user_name" type="text" class="validate" name="username">
+          <label for="user_name">Nombre de usuario</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="password" type="password" class="validate" name="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="email" type="email" class="validate" name="email">
+          <label for="email">Email</label>
+          <span class="helper-text" data-error="Formato incorrecto" data-success="Ok!"></span>
+        </div>
+        <div class="input-field col s6">
+          <select multiple name="roles">
+            <option value="Administrador">Administrador</option>
+            <option value="Docente">Docente</option>
+            <option value="Preceptor">Preceptor</option>
+          </select>
+          <label for="roles">Rol:</label>
+        </div>
+      </div>
+      <a href="{{ url_for( 'users.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}

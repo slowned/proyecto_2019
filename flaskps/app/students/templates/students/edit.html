@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Editar estudiante{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Editar Estudiante</h4>
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row" id='edit-student'>
+    {% if form.errors %}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form class="col s12" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" value="{{ student.name }}" name="name">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate" value="{{ student.surname }}" name="surname">
+          <label for="last_name">Apellido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <label for="birth_date">Fecha de nacimiento:</label>
+          <input id="birth_date" type="text" class="datepicker" value="{{ student.birth_date }}" name="birth_date">
+        </div>
+        <div class="input-field col s6">
+          <select name="gender">
+            <option value="{{ student.gender.code }}" selected>{{ student.gender }}</option>
+            <option value="female">Femenino</option>
+            <option value="male">Masculino</option>
+            <option value="others">Otro</option>
+          </select>
+          <label for="gender">Genero:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="browser-default col s6">
+          <select name="document_type">
+            <option value="{{ student.document_type }}" selected> <i>{{ student.document_type }} </i></option>
+            {% for dni in dniTypes %}
+              <option value="{{ dni.nombre }}">{{ dni.nombre }}</option>
+            {% endfor %}
+          </select>
+          <label for="document_type">Tipo de documento:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="birth_city" type="number" class="validate" value="{{ student.document_number }}" name="document_number">
+          <label for="birth_city">Nro de documento</label>
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="birth_city" name="borned" type="text" class="validate" value="{% if student.borned %}{{ student.borned }} {% endif %}">
+          <label for="birth_city">Lugar de nacimiento</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="locality">
+            <option value="{{ student.locality }}" selected>{{ student.locality }}</option>
+            {% for locality in localities %}
+              <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
+            {% endfor %}
+          </select>
+          <label for="locality">Localidad</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="address" type="text" class="validate" value="{{ student.address }}" name="address">
+          <label for="address">Domicilio</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="neighborhood">
+            <option value="{{ student.neighborhood_id }}" selected> {{ student.neighborhood_id }}</option>
+            {% for n in neighborhoods %}
+              <option value="{{ n.id }}">{{ n.name }}</option>
+            {% endfor %}
+          </select>
+          <label for="neighborhood">Barrio:</label>
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="tutor">
+            <option value="{{ student.tutor }}" selected> {{ student.tutor }}</option>
+            <option value="Madre">Madre</option>
+            <option value="Padre">Padre</option>
+            <option value="Tutor">Tutor</option>
+          </select>
+          <label for="tutor">Responsable a cargo:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="tutor_name" name="tutor_name" type="text" value="{{ student.tutor_name }}" class="validate">
+          <label for="tutor_name">Nombre del tutor</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="phone" name="phone" type="tel" class="validate" value="{% if student.phone %}{{ student.phone }}{% endif %}">
+          <label for="phone">Telefono:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="school">
+            <option value="{{ student.school_id }}" selected>{{ student.school_id }}</option>
+            {% for s in schools %}
+              <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
+          </select>
+          <label for="school">Escuela:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="level">
+            <option value="{{ student.level_id }}" selected>{{ student.level_id }}</option>
+            {% for l in levels %}
+              <option value="{{ l.id }}">{{ l.name }}</option>
+            {% endfor %}
+          </select>
+          <label for="level">Nivel:</label>
+        </div>
+      </div>
+      <a href="{{ url_for( 'students.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
+      <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}

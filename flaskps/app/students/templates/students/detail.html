@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Detalles estudiante{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <h4 class="center">Detalles estudiante:</h4>
+  <div class="divider black"></div><br>
+  <div class="container">
+  <ul class="collection">
+  <li class="collection-item avatar">
+        <i class="material-icons circle green">account_circle</i>
+        <span class="title"><h5>{{ student.name }} {{ student.surname }}</h5></span>
+        <p><b>Fecha de nacimiento:</b> {{ student.birth_date.strftime('%d-%m-%Y') }}<br>
+           <b>Lugar de nacimiento:</b>{% if student.borned %} {{ student.borned }} {% endif %}<br>
+           <b>Localidad:</b> {{ student.locality }}<br>
+           <b>Direccion:</b> {{ student.address }}<br>
+           <b>Barrio:</b>{{  neighborhood.name }}<br>
+           <b>Genero:</b> {{ student.gender }}<br>
+           <b>Tipo de documento:</b> {{ student.document_type }}<br>
+           <b>Nro de documento:</b> {{ student.document_number }}<br>
+           <b>Responsable:</b> {{ student.tutor }} <b>Nombre del responsable</b>: {{ student.tutor_name }}<br>
+           <b>Telefono:</b> {% if student.phone %} {{ student.phone }} {% endif %}<br>
+           <b>Colegio:</b> {{ school.name }}<br>
+           <b>Nivel:</b> {{ level.name }}
+        </p>
+        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+      </li>
+      </ul>
+      <form class="right" method="POST" action="{{ url_for('students.delete', student_id=student.id) }}"><a href="{{ url_for( 'students.list' ) }}" class="btn waves-effect waves-light">Volver</a><button class="btn waves-effect waves-light red darken-2" type="submit">Borrar</button></form>
+      <br><br>
+</div>
+
+{% endblock %}

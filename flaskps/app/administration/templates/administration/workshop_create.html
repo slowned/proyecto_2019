@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Taller{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Agregar Taller a:</h4>
+<h5 class="center"> Ciclo lectivo: {{school_year.start_date}} - {{school_year.semesters}} </h5>
+<div class="divider black"></div><br><br>
+<div class="container">
+  <div class="row">
+  {% if form.errors %}
+    {% for f in form._fields.items() %}
+      {% if f[0] in form.errors %}
+        {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <form class="col s12" action="{{ url_for('administration.workshop_create', school_year_id=school_year.id) }}" method="POST">
+    <div class="row">
+      <div class="input-field col s6">
+          <select name="name">
+            {% for taller in talleres %}
+              <option value="{{ taller[0] }}"> {{ taller[1] }} </option>
+            {% endfor %}
+          </select>
+          <label for="name">Nombre del taller:</label>
+      </div>
+      <div class="input-field col s6">
+      <input id="short_name" type="text" name="short_name">
+      <label for="short_name">Nombre corto:</label>
+    </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="nucleo">
+            {% for nucleo in nucleos %}
+            <option value="{{ nucleo.name }}"> {{ nucleo.name }} </option>
+            {% endfor %}
+          </select>
+          <label for="nucleo">Nucleo:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="clases" type="number" name="clases" min="1">
+          <label for="clases">Cantidad de clases:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="days">
+            <option value="lunes">Lunes</option>
+            <option value="martes">Martes</option>
+            <option value="miercoles">Miercoles</option>
+            <option value="jueves">Jueves</option>
+            <option value="viernes">Viernes</option>
+          </select>
+          <label for="days">Dia:</label>
+        </div>
+        <div class="input-field col s6">
+        <!-- <input id="horario" type="time" name="horario"> -->
+        <input type="text" class="timepicker" name="horario">
+        <label for="horario">Horario:</label>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="address" type="text" name="address" required>
+          <label for="address">Direccion:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="teacher">
+            {% for teacher in teachers %}
+            <option value="{{ teacher.id }}"> {{ teacher.name }} </option>
+            {% endfor %}
+          </select>
+          <label for="teacher">Profesor a cargo:</label>
+        </div>
+      </div>
+    <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+  </form>
+    </div>
+</div>
+{% endblock %}

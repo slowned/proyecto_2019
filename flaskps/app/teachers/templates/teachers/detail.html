@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Detalle docente{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Detalles docente:</h4>
+<div class="divider black"></div><br>
+<div class="container">
+<ul class="collection">
+<li class="collection-item avatar">
+      <i class="material-icons circle green">account_circle</i>
+      <span class="title"><h5>{{ teacher.name }} {{ teacher.surname }}</h5></span>
+      <p><b>Fecha de nacimiento:</b> {{ teacher.birth_date.strftime('%d-%m-%Y') }}<br>
+         <b>Localidad:</b> {{ teacher.locality }}<br>
+         <b>Direccion:</b> {{ teacher.address }}<br>
+         <b>Tipo de documento:</b> {{ teacher.document_type }}<br>
+         <b>Nro de documento:</b> {{ teacher.document_number }}<br>
+         <b>Telefono:</b> {% if teacher.phone %} {{ teacher.phone }} {% endif %}
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    </ul>
+    <form class="right" method="POST" action="{{ url_for('teachers.delete', teacher_id=teacher.id) }}"><a href="{{ url_for( 'teachers.list' ) }}" class="btn waves-effect waves-light">Volver</a><button class="btn waves-effect waves-light red darken-2" type="submit">Borrar</button></form>
+    <br><br>
+</div>
+{% endblock %}

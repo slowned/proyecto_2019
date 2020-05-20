@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Agregar alumno{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Agregar alumnos al taller</h4>
+<div id="add_student" class="container">
+  {% if msg %}
+    {{ msg }}
+  {% endif %}
+  <div class="divider black"></div><br>
+  <table class="responsive-table centered highlight">
+    <thead>
+      <tr>
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Tipo de documento</th>
+        <th>Nro de documento</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+        <tr>
+          <td>{{ student.surname }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.document_type }}</td>
+          <td>{{ student.document_number }}</td>
+          <td>
+            <!--
+            <label>
+              <input type="checkbox" value="{{student.id}}" name="active" v-model="studentsIds">
+              <span>Activo</span>
+            </label>
+            -->
+            <a href="{{ url_for('administration.workshop_add_student',  workshop_id=workshop.id, student_id=student.id) }}">AGREGAR</a>
+            {% if student in workshop.students %}
+              <span> | YA ESTA AGREGADO</span>
+            {% endif %}
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <input type="hidden" value="{{workshop.id}}" v-model="workshop">
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#add_student',
+    delimiters: ['[[', ']]'],
+    data: {
+      studentsIds: [],
+      workshop: null,
+    },
+    methods: {},
+  })
+</script>
+{% endblock %}

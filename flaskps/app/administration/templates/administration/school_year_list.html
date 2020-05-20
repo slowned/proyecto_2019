@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Ciclos lectivos{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<h4 class="center">Ciclos lectivos</h4>
+    <div class="divider black"></div><br>
+<div class="container">
+  <table class="responsive-table centered highlight">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+        <th>Semestre</th>
+        <th>Detalle</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sy in school_years.items %}
+        <tr>
+          <td>{{ sy.start_date.year }}</td>
+          <td>{{ sy.start_date }}</td>
+          <td>{{ sy.end_date }}</td>
+          <td>{{ sy.semesters }}</td>
+          <td>
+            <a href="{{ url_for('administration.school_year_detail', school_year_id=sy.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
+            <form method="GET" action="{{ url_for('administration.school_year_edit', school_year_id=sy.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
+            <form method="POST" action="{{ url_for('administration.school_year_delete', school_year_id=sy.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
+            <a href="{{ url_for('administration.workshop_create',  school_year_id=sy.id) }}"><i class="tiny material-icons yellow-text text-darken-4 tooltipped" data-position="right" data-tooltip="Agregar taller">add_box</i></a>            
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <ul class="pagination center">
+    {% if school_years.has_prev %}
+      <li class="waves-effect"><a href="{{ url_for('administration.school_year_list', page=school_years.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+    {% for page in school_years.iter_pages() %}
+      {% if page %}
+        {% if page != school_years.page %}
+          <li class=""><a href="{{ url_for('administration.school_year_list', page=page) }}">{{ page }}</a></li>
+        {% else %}
+          <li class="active teal darken-3"><a href="#!">{{ page }}</a></li>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    {% if school_years.has_next %}
+      <li class="waves-effect"><a href="{{ url_for('administration.school_year_list', page=school_years.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    {% endif %}
+  </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Usuarios {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Usuarios</h4>
+<div class="divider black"></div>
+<div class="container"><br>
+
+  <div class="row">
+    <form class="col s12" action="{{ url_for('users.list') }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input type="text" name="username" id="user_name">
+          <label for="user_name">Nombre de usuario:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="active">
+            <option value="" selected>Todos</option>
+            <option value="True">Activos</option>
+            <option value="False">Inactivos</option>
+          </select>
+        </div>
+      </div>
+        <button class="btn waves-effect waves-light right" type="submit">Buscar</button><br><br>
+    </form>
+  </div>
+  <div class="divider black"></div><br>
+
+  <table class="responsive-table centered highlight">
+    <thead>
+    <tr>
+      <th>Nombre de usuario</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Activo</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in user_list.items %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.name}}</td>
+        <td>{{ user.surname }}</td>
+        {% if user.active %}
+          <td><b>ACTIVO</b></td>
+        {% else %}
+          <td><b>INACTIVO</b></td>
+        {% endif %}
+        <td>
+          <a href="{{ url_for('users.detail', user_id=user.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
+          <form method="GET" action="{{ url_for('users.update', user_id=user.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
+          <form method="POST" action="{{ url_for('users.delete', user_id=user.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table><br>
+  <a href="{{ url_for('users.create') }}" class="btn-floating btn-medium waves-effect waves-light teal right tooltipped" data-tooltip="Agregar usuario"><i class="material-icons">add</i></a>
+  <ul class="pagination center">
+    {% if user_list.has_prev %}
+      <li class="waves-effect"><a href="{{ url_for('users.list',page=user_list.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+    {% for page in user_list.iter_pages() %}
+      {% if page %}
+        {% if page != user_list.page %}
+          <li class=""><a href="{{ url_for('users.list',page=page) }}">{{ page }}</a></li>
+        {% else %}
+          <li class="active teal darken-3"><a href="#!">{{ page }}</a></li>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    {% if user_list.has_next %}
+      <li class="waves-effect"><a href="{{ url_for('users.list',page=user_list.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    {% endif %}
+  </ul>
+</div>
+<br><br>
+{% endblock %}

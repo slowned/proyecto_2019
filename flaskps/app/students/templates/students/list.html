@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Estudiantes{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<h4 class="center">Estudiantes</h4>
+    <div class="divider black"></div><br>
+<div class="container">
+  <table class="responsive-table centered highlight">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Documento</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for student in students.items %}
+      <tr>
+        <td>{{ student.name }}</td>
+        <td>{{ student.surname }}</td>
+        <td>{{ student.document_number }}</td>
+        <td>
+          <a href="{{ url_for('students.detail', student_id=student.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
+          <form method="GET" action="{{ url_for('students.update', student_id=student.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
+          <form method="POST" action="{{ url_for('students.delete', student_id=student.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table><br>
+  <a href="{{ url_for('students.create') }}" class="btn-floating btn-medium waves-effect waves-light teal right tooltipped" data-tooltip="Agregar alumno"><i class="material-icons">add</i></a>
+  <ul class="pagination center">
+    {% if students.has_prev %}
+      <li class="waves-effect"><a href="{{ url_for('users.list',page=students.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+    {% for page in students.iter_pages() %}
+      {% if page %}
+        {% if page != students.page %}
+          <li class=""><a href="{{ url_for('students.list',page=page) }}">{{ page }}</a></li>
+        {% else %}
+          <li class="active teal darken-3"><a href="#!">{{ page }}</a></li>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    {% if students.has_next %}
+      <li class="waves-effect"><a href="{{ url_for('students.list',page=students.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}
